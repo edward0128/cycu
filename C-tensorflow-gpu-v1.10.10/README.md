@@ -2,7 +2,7 @@
 
 |  Keras | OpenCV   | Python  |Pytorch|Tensorflow|Tools|
 |---|---|---|---|---|---|
-|GPU  v2.2.2|| v3.5  |v1.4|GPU v1.10.10 ||
+|GPU  v2.2.2|| v3.5  ||GPU v1.10.10 ||
 
 Misc
 |---|
