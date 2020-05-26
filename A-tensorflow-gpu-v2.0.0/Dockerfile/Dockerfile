@@ -17,6 +17,8 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 ###
 RUN pip install --upgrade pip
 RUN pip install keras==2.2.4
+RUN pip install matplotlib
+RUN pip install pandas
 ##
 EXPOSE 8888
 EXPOSE 22
