@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:2.0.0-gpu-py3-jupyter
+FROM tensorflow/tensorflow:1.10.1-devel-gpu-py3
 #
 ###
 ENV DEBIAN_FRONTEND=noninteractive
@@ -16,7 +16,8 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 ###
 RUN pip install --upgrade pip
-RUN pip install keras==2.2.4
+RUN pip install keras==2.2.2
+RUN pip3 install jupyter
 ##
 EXPOSE 8888
 EXPOSE 22
