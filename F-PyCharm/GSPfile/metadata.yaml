@@ -1,0 +1,18 @@
+# Solution name
+name: tensorflow_gpu
+# Human-readable name for your solution
+title: tensorflow_gpu
+# Solution version
+version: '19.08.14'
+# Description
+description: tensorflow_gpu
+# Category
+category: Bare
+# Required gemini version
+gemini_version: ['2019.01.31']
+# Solution platform
+container_type: docker
+resource_definitions:
+  - parameter: flavor
+    type: flavor
+    count: "1"

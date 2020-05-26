@@ -1,0 +1,45 @@
+create_site:
+  - parameter: nfssourceip
+    required: false
+    forms: CharField
+    label: nfssourceip
+    widget:
+      forms: TextInput
+      attrs:
+        - class: form-control
+
+  - parameter: nfssourcepath
+    required: false
+    forms: CharField
+    label: nfssourcepath
+    widget:
+      forms: TextInput
+      attrs:
+        - class: form-control
+  
+  - parameter: nfsmountpath
+    required: false
+    forms: CharField
+    label: nfsmountpath
+    widget:
+      forms: TextInput
+      attrs:
+        - class: form-control
+
+  - parameter: image
+    forms: CharField
+    label: Image
+    widget:
+      forms: TextInput
+      attrs:
+        - class: form-control
+
+
+  - parameter: flavor
+    forms: ChoiceField
+    label: Flavor
+    widget:
+      forms: Select
+      attrs:
+        - class: form-control
+        - required: required
