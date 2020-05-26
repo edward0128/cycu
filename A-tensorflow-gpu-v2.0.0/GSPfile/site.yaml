@@ -1,0 +1,107 @@
+parameters:
+  image:
+    type: user_defined_image_list
+    values:
+       - harbor.gemini.com:30003/test/tensorflow_classroom:v2
+  nfssourceip:
+    type: string
+  nfssourcepath:
+    type: string
+  nfsmountpath:
+    type: string
+  password:
+    type: string
+  flavor:
+    type: flavor_list
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+ name: name
+ namespace: namespace
+spec:
+ replicas: 1
+ selector:
+  "app": "myapp"
+ template:
+  metadata:
+   name: name
+   namespace: namespace
+   labels:
+    "app": "myapp"
+  spec:
+   containers:
+   - name: myweb
+     image: {{ image }}
+     command: ["/bin/sh"]
+     args: ["-c", "sleep 3;./run_jupyter.sh"]
+     env:
+     - name: PASSWORD
+       value: '{{password}}'
+     ports:
+     - containerPort: 8080
+       name: tensorboard
+     - containerPort: 8888
+       name: web
+     - containerPort: 22
+       name: ssh
+     {%- if nfsmountpath and nfssourceip and nfssourcepath %}
+     volumeMounts:
+        - mountPath: {{nfsmountpath}}
+          name: nfs
+          readOnly: false
+     {%- endif %}
+     resources: {{ flavor }}
+   {%- if nfsmountpath and nfssourceip and nfssourcepath %}
+   volumes:
+     - name: nfs
+       nfs:
+         server: {{nfssourceip}}
+         path: {{nfssourcepath}}
+   {%- endif %}
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: name
+ namespace: namespace
+spec:
+ type: NodePort
+ ports:
+ - port: 8888
+   targetPort: 8888
+   protocol: TCP
+   name: web
+ selector:
+  'app': 'myapp'
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: name
+ namespace: namespace
+spec:
+ type: NodePort
+ ports:
+ - port: 22
+   targetPort: 22
+   protocol: TCP
+   name: ssh
+ selector:
+  'app': 'myapp'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: name
+ namespace: namespace
+spec:
+ type: NodePort
+ ports:
+ - port: 6006
+   targetPort: 6006
+   protocol: TCP
+   name: tensorboard
+ selector:
+  'app': 'myapp'
