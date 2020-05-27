@@ -14,8 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: echo "hello"
+    - name: Move to the Dockerfile
+      run: cd cycu/A-tensorflow-gpu-v2.0.0/Dockerfile/
+      
       
       
   #      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
