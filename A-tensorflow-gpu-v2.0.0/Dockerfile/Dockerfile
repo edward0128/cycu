@@ -1,6 +1,6 @@
 FROM tensorflow/tensorflow:2.0.0-gpu-py3-jupyter
-#
-###
+
+# setting the ssh client
 ENV DEBIAN_FRONTEND=noninteractive
 RUN sed -i 's/archive.ubuntu.com/free.nchc.org.tw/g' /etc/apt/sources.list
 RUN apt update && apt install wget -y
@@ -14,30 +14,26 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
-###
+
+# install the library by pip 
 RUN pip install --upgrade pip
 RUN pip install keras==2.2.4
 RUN pip install matplotlib
 RUN pip install pandas
-##
+
+## expose port 8888,22
 EXPOSE 8888
 EXPOSE 22
-###
-#COPY .keras /root/.keras
+
+# Setting jupyter notebook
 COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
-#COPY tensorflow-for-poets-2 /home/tensorflow-for-poets-2
-#COPY CNN_Mnist.ipynb /home/CNN_Mnist.ipynb
-#COPY RNN_Mnist.ipynb /home/RNN_Mnist.ipynb
-#COPY CNN_Retrain.ipynb /home/CNN_Retrain.ipynb
-#COPY flower_test4.jpeg /home/flower_test4.jpeg
-#COPY flower_test2.jpeg /home/flower_test2.jpeg
+
+# install Anaconda3
 RUN wget --quiet https://repo.continuum.io/archive/Anaconda3-2019.10-Linux-x86_64.sh -O ~/anaconda.sh && \
     /bin/bash ~/anaconda.sh -b -p /opt/conda && \
     rm ~/anaconda.sh && \
     echo "export PATH=/opt/conda/bin:$PATH" >> ~/.bashrc
 
-
 COPY run_jupyter.sh run_jupyter.sh
 USER root
 CMD ./run_jupyter.sh
-#CMD ["source /etc/bash.bashrc && jupyter notebook --notebook-dir=/home --ip 0.0.0.0 --no-browser --allow-root"]
