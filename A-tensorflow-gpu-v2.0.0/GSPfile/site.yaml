@@ -64,6 +64,7 @@ spec:
          path: "/Pool-1/lab/lab/{{project_name}}"
      - name: home
        nfs:
+<<<<<<< HEAD
          server: "192.168.20.80"
          path: "/Pool-1/userhome/home/{{username}}"
      - name: data-share
@@ -78,6 +79,10 @@ spec:
 
 
 
+=======
+         server: {{nfssourceip}}
+         path: {{nfssourcepath}}
+>>>>>>> 3c988d9bc56705d51d9f982f3c90592856291ce1
 ---
 apiVersion: v1
 kind: Service
