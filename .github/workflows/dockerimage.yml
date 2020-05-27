@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Move to the Dockerfile
-      run: pwd
+      run: cd A-tensorflow-gpu-v2.0.0
       
       
       
