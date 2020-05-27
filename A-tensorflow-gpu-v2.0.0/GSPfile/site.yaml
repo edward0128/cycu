@@ -45,20 +45,16 @@ spec:
        name: web
      - containerPort: 22
        name: ssh
-     {%- if nfsmountpath and nfssourceip and nfssourcepath %}
      volumeMounts:
         - mountPath: {{nfsmountpath}}
           name: nfs
           readOnly: false
-     {%- endif %}
      resources: {{ flavor }}
-   {%- if nfsmountpath and nfssourceip and nfssourcepath %}
    volumes:
      - name: nfs
        nfs:
          server: {{nfssourceip}}
          path: {{nfssourcepath}}
-   {%- endif %}
 ---
 apiVersion: v1
 kind: Service
