@@ -16,8 +16,10 @@ jobs:
     - uses: actions/checkout@v2
     - name: test
       run: docker login --username=yusongwang1991 --password=${{secrets.password}}
-    #- name: Start to Build
-    #  run:  cd A-tensorflow-gpu-v2.0.0/Dockerfile && docker build -t harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1 . --no-cache
+    - name: Start to Build
+      run:  cd A-tensorflow-gpu-v2.0.0/Dockerfile && docker build -t yusongwang1991/a-tensorflow-gpu-v2.0.0:v1 . --no-cache
+    - name: docer push 
+      run:  docker push yusongwang1991/a-tensorflow-gpu-v2.0.0:v1
       
       
       
