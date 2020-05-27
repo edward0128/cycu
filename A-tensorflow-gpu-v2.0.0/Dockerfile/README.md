@@ -12,12 +12,12 @@ How to use pycharm to connect the remote server.
 
 2. build image
 ```
-docker build -t harbor.gemini.com:30003/test/harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1 . --no-cache
+docker build -t harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1 . --no-cache
 ```
 
 ### Usage
 ```
-docker run -it -e PASSWORD=password -p 8088:8888 -p 8022:22 harbor.gemini.com:30003/test/harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1
+docker run -it -e PASSWORD=password -p 8088:8888 -p 8022:22 harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1
 ```    
     
 ### Test
