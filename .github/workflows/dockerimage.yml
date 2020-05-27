@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    #branches: [ master ]
   pull_request:
-    branches: [ master ]
+    #branches: [ master ]
 
 jobs:
 
@@ -20,10 +20,10 @@ jobs:
       run:  cd F-PyCharm/Dockerfile && docker build -t yusongwang1991/f-pycharm:v1 . --no-cache
     - name: docer push f-pycharm
       run:  docker push yusongwang1991/f-pycharm:v1
-    - name: Start to Build
-      run:  cd A-tensorflow-gpu-v2.0.0/Dockerfile && docker build -t yusongwang1991/a-tensorflow-gpu-v2.0.0:v1 . --no-cache
-    - name: docer push 
-      run:  docker push yusongwang1991/a-tensorflow-gpu-v2.0.0:v1
+    #- name: Start to Build
+    #  run:  cd A-tensorflow-gpu-v2.0.0/Dockerfile && docker build -t yusongwang1991/a-tensorflow-gpu-v2.0.0:v1 . --no-cache
+    #- name: docer push 
+    #  run:  docker push yusongwang1991/a-tensorflow-gpu-v2.0.0:v1
       
       
       
