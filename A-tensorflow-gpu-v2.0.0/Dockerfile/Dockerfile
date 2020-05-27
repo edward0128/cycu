@@ -34,6 +34,10 @@ RUN wget --quiet https://repo.continuum.io/archive/Anaconda3-2019.10-Linux-x86_6
     rm ~/anaconda.sh && \
     echo "export PATH=/opt/conda/bin:$PATH" >> ~/.bashrc
 
+###
+RUN mkdir /data-share
+RUN mkdir /lab
+
 COPY run_jupyter.sh run_jupyter.sh
 USER root
 CMD ./run_jupyter.sh

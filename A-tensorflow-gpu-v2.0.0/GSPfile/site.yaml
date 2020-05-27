@@ -2,17 +2,15 @@ parameters:
   image:
     type: user_defined_image_list
     values:
-       - harbor.gemini.com:30003/test/tensorflow_classroom:v2
-  nfssourceip:
-    type: string
-  nfssourcepath:
-    type: string
-  nfsmountpath:
-    type: string
+       - harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1
   password:
     type: string
   flavor:
     type: flavor_list
+  username:
+    type: gpfs_user
+  project_name:
+    type: project_name
 ---
 apiVersion: v1
 kind: ReplicationController
@@ -45,20 +43,41 @@ spec:
        name: web
      - containerPort: 22
        name: ssh
-     {%- if nfsmountpath and nfssourceip and nfssourcepath %}
      volumeMounts:
-        - mountPath: {{nfsmountpath}}
-          name: nfs
+        - mountPath: "/opt"
+          name: opt
           readOnly: false
-     {%- endif %}
+        - mountPath: "/data-share"
+          name: data-share
+          readOnly: false
+        - mountPath: "/home"
+          name: home
+          readOnly: false
+        - mountPath: "/lab"
+          name: lab
+          readOnly: false
      resources: {{ flavor }}
-   {%- if nfsmountpath and nfssourceip and nfssourcepath %}
    volumes:
-     - name: nfs
+     - name: lab
        nfs:
-         server: {{nfssourceip}}
-         path: {{nfssourcepath}}
-   {%- endif %}
+         server: "192.168.20.80"
+         path: "/Pool-1/lab/lab/{{project_name}}"
+     - name: home
+       nfs:
+         server: "192.168.20.80"
+         path: "/Pool-1/userhome/home/{{username}}"
+     - name: data-share
+       nfs:
+         server: "192.168.20.80"
+         path: "/Pool-1/data-share/data-share/"
+     - name: opt
+       nfs:
+         server: "192.168.20.80"
+         path: "/Pool-1/opt/opt/"
+
+
+
+
 ---
 apiVersion: v1
 kind: Service
