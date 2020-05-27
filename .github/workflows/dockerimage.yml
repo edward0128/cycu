@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: test
-      run: echo $test
+      run: echo  ${{password}}
     #- name: Start to Build
     #  run:  cd A-tensorflow-gpu-v2.0.0/Dockerfile && docker build -t harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1 . --no-cache
       
