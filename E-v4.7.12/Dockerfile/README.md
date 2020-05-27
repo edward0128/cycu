@@ -1,9 +1,7 @@
-How to use pycharm to connect the remote server.
-- https://medium.com/@matteosoo/how-to-configure-pycharm-with-remote-interpreter-23f6a568fc28
 
 ### Base Docker Image
 
-* [tensorflow/tensorflow:2.0.0-gpu-py3-jupyter](https://hub.docker.com/layers/tensorflow/tensorflow/2.0.0-gpu-py3-jupyter/images/sha256-613cdca993785f7c41c744942871fc5358bc0110f6f5cb5b00a4b459356d55e4?context=explore)
+* [ubuntu:16.04](https://hub.docker.com/layers/ubuntu/library/ubuntu/16.04/images/sha256-a4fc0c40360ff2224db3a483e5d80e9164fe3fdce2a8439d2686270643974632?context=explore)
 
 
 ### Installation
@@ -12,25 +10,19 @@ How to use pycharm to connect the remote server.
 
 2. build image
 ```
-docker build -t harbor.gemini.com:30003/test/harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1 . --no-cache
+docker build -t harbor.gemini.com:30003/test/e-v4.7.12:v1 . --no-cache
 ```
 
 ### Usage
 ```
-docker run -it -e PASSWORD=password -p 8088:8888 -p 8022:22 harbor.gemini.com:30003/test/harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1
+docker run -it -e PASSWORD=password -p 8022:22 harbor.gemini.com:30003/test/e-v4.7.12:v1
 ```    
     
 ### Test
-    
- 1. use browser connect the website
- 
-```
-IP:8088
-
 You can use the "password" to login JupyterNoteBook.
 ```
     
- 2. use ssh to connect the pods
+ 1. use ssh to connect the pods
 ```
 ssh root@IP -p 8022
 ```
