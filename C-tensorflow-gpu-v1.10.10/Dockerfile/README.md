@@ -1,9 +1,7 @@
-How to use pycharm to connect the remote server.
-- https://medium.com/@matteosoo/how-to-configure-pycharm-with-remote-interpreter-23f6a568fc28
 
 ### Base Docker Image
 
-* [tensorflow/tensorflow:2.0.0-gpu-py3-jupyter](https://hub.docker.com/layers/tensorflow/tensorflow/2.0.0-gpu-py3-jupyter/images/sha256-613cdca993785f7c41c744942871fc5358bc0110f6f5cb5b00a4b459356d55e4?context=explore)
+* [tensorflow/tensorflow:1.10.1-devel-gpu-py3](https://hub.docker.com/layers/tensorflow/tensorflow/1.10.1-devel-gpu-py3/images/sha256-f0ef7657d2ce354d30ae539cf54d5433d85021b86c9f7de545d905e588d691f6?context=explore)
 
 
 ### Installation
@@ -12,12 +10,12 @@ How to use pycharm to connect the remote server.
 
 2. build image
 ```
-docker build -t harbor.gemini.com:30003/test/harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1 . --no-cache
+docker build -t harbor.gemini.com:30003/test/c-tensorflow-gpu-v1.10.1 . --no-cache
 ```
 
 ### Usage
 ```
-docker run -it -e PASSWORD=password -p 8088:8888 -p 8022:22 harbor.gemini.com:30003/test/harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1
+docker run -it -e PASSWORD=password -p 8088:8888 -p 8022:22 harbor.gemini.com:30003/test/c-tensorflow-gpu-v1.10.1
 ```    
     
 ### Test
