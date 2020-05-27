@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: test
       run: docker login --username=yusongwang1991 --password=${{secrets.password}}
-    - name: Start to Build
+    - name: Start to Build2
       run:  cd F-PyCharm/Dockerfile && docker build -t yusongwang1991/f-pycharm:v1 . --no-cache
     - name: docer push f-pycharm
       run:  docker push yusongwang1991/f-pycharm:v1
