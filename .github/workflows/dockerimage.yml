@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Move to the Dockerfile
-      run: cd cycu/A-tensorflow-gpu-v2.0.0/Dockerfile/
+      run: pwd
       
       
       
