@@ -15,7 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Move to the Dockerfile
-      run: cd A-tensorflow-gpu-v2.0.0
+      run: cd A-tensorflow-gpu-v2.0.0/Dockerfile
+    - name: Start to Build
+      run: docker build -t harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1 . --no-cache
       
       
       
