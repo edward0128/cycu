@@ -7,7 +7,7 @@ RUN apt update && apt install wget -y
 RUN echo deb http://deb.obspy.org xenial main >> /etc/apt/sources.list
 RUN wget --quiet -O - https://raw.github.com/obspy/obspy/master/misc/debian/public.key | apt-key add -
 RUN apt update
-RUN apt install -y openssh-server python3-obspy -y
+RUN apt install -y openssh-server
 RUN mkdir /var/run/sshd
 RUN echo 'root:password' | chpasswd
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
