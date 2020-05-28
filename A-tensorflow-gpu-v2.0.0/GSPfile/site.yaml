@@ -36,6 +36,8 @@ spec:
      env:
      - name: PASSWORD
        value: '{{password}}'
+     - name: username
+       value: '{{username}}'
      ports:
      - containerPort: 8080
        name: tensorboard
@@ -50,7 +52,7 @@ spec:
         - mountPath: "/data-share"
           name: data-share
           readOnly: false
-        - mountPath: "/home"
+        - mountPath: "/home/{{username}}"
           name: home
           readOnly: false
         - mountPath: "/lab"

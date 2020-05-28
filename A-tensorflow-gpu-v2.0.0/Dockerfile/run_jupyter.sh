@@ -5,8 +5,10 @@
 #echo edward:$1 | chpasswd
 # change ssh password
 #touch /home/$1
-echo root:$PASSWORD | chpasswd
 
+mkdir -p /home/$username
+
+echo root:$PASSWORD | chpasswd
 
 # Start the first process
 #service ssh start
