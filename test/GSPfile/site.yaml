@@ -1,0 +1,130 @@
+parameters:
+  image:
+    type: user_defined_image_list
+    values:
+       - harbor.gemini.com:30003/test/test:v1
+  password:
+    type: string
+  flavor:
+    type: flavor_list
+  username:
+    type: gpfs_user
+  project_name:
+    type: project_name
+  uid:
+    type: userid
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+ name: name
+ namespace: namespace
+spec:
+ replicas: 1
+ selector:
+  "app": "myapp"
+ template:
+  metadata:
+   name: name
+   namespace: namespace
+   labels:
+    "app": "myapp"
+  spec:
+   containers:
+   - name: myweb
+     image: {{ image }}
+     command: ["/bin/sh"]
+     args: ["-c", "sleep 3;./run_jupyter.sh"]
+     env:
+     - name: PASSWORD
+       value: '{{password}}'
+     - name: username
+       value: '{{username}}'
+     - name: account
+       value: '{{username}}'
+     - name: user_user_id
+       value: '{{uid}}'
+     ports:
+     - containerPort: 8080
+       name: tensorboard
+     - containerPort: 8888
+       name: web
+     - containerPort: 22
+       name: ssh
+     volumeMounts:
+        - mountPath: "/opt"
+          name: opt
+          readOnly: false
+        - mountPath: "/data-share"
+          name: data-share
+          readOnly: false
+        - mountPath: "/home/{{username}}"
+          name: home
+          readOnly: false
+        - mountPath: "/lab"
+          name: lab
+          readOnly: false
+     resources: {{ flavor }}
+   volumes:
+     - name: lab
+       nfs:
+         server: "192.168.20.80"
+         path: "/Pool-1/lab/lab/{{project_name}}"
+     - name: home
+       nfs:
+         server: "192.168.20.80"
+         path: "/Pool-1/userhome/home/{{username}}"
+     - name: data-share
+       nfs:
+         server: "192.168.20.80"
+         path: "/Pool-1/data-share/data-share/"
+     - name: opt
+       nfs:
+         server: "192.168.20.80"
+         path: "/Pool-1/opt/opt/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: name
+ namespace: namespace
+spec:
+ type: NodePort
+ ports:
+ - port: 8888
+   targetPort: 8888
+   protocol: TCP
+   name: web
+ selector:
+  'app': 'myapp'
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: name
+ namespace: namespace
+spec:
+ type: NodePort
+ ports:
+ - port: 22
+   targetPort: 22
+   protocol: TCP
+   name: ssh
+ selector:
+  'app': 'myapp'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: name
+ namespace: namespace
+spec:
+ type: NodePort
+ ports:
+ - port: 6006
+   targetPort: 6006
+   protocol: TCP
+   name: tensorboard
+ selector:
+  'app': 'myapp'
