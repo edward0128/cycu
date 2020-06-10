@@ -39,5 +39,6 @@ RUN mkdir /data-share
 RUN mkdir /lab
 
 COPY run_jupyter.sh run_jupyter.sh
+RUN chmod 777 run_jupyter.sh
 USER root
 CMD ./run_jupyter.sh

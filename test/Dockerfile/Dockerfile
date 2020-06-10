@@ -28,7 +28,9 @@ COPY jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
 ###
 RUN mkdir /data-share
 RUN mkdir /lab
+RUN mkdir /home/data-share
+RUN mkdir /home/lab
 
 COPY run_jupyter.sh run_jupyter.sh
 RUN chmod 777 run_jupyter.sh
-CMD ./run_jupyter.sh $PASSWORD $account $user_user_id
+CMD ./run_jupyter.sh $PASSWORD $account $uid

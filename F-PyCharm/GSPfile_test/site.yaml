@@ -2,17 +2,19 @@ parameters:
   image:
     type: user_defined_image_list
     values:
-       - harbor.gemini.com:30003/test/tensorflow_classroom:v2
-  nfssourceip:
-    type: string
-  nfssourcepath:
-    type: string
-  nfsmountpath:
-    type: string
+       - harbor.gemini.com:30003/test/f-pycharm:v1
   password:
     type: string
   flavor:
     type: flavor_list
+  username:
+    type: gpfs_user
+  project_name:
+    type: project_name
+  uid:
+    type: uid
+  gid:
+    type: gid
 ---
 apiVersion: v1
 kind: ReplicationController
@@ -38,6 +40,14 @@ spec:
      env:
      - name: PASSWORD
        value: '{{password}}'
+     - name: username
+       value: '{{username}}'
+     - name: account
+       value: '{{username}}'
+     - name: uid
+       value: '{{uid}}'
+     - name: gid
+       value: '{{gid}}'
      ports:
      - containerPort: 8080
        name: tensorboard
@@ -45,20 +55,37 @@ spec:
        name: web
      - containerPort: 22
        name: ssh
-     {%- if nfsmountpath and nfssourceip and nfssourcepath %}
      volumeMounts:
-        - mountPath: {{nfsmountpath}}
-          name: nfs
+        - mountPath: "/opt"
+          name: opt
           readOnly: false
-     {%- endif %}
+        - mountPath: "/home/data-share"
+          name: data-share
+          readOnly: false
+        - mountPath: "/home/{{username}}"
+          name: home
+          readOnly: false
+        - mountPath: "/home/lab"
+          name: lab
+          readOnly: false
      resources: {{ flavor }}
-   {%- if nfsmountpath and nfssourceip and nfssourcepath %}
    volumes:
-     - name: nfs
+     - name: lab
        nfs:
-         server: {{nfssourceip}}
-         path: {{nfssourcepath}}
-   {%- endif %}
+         server: "140.135.40.91"
+         path: "/volume1/lab/{{project_name}}"
+     - name: home
+       nfs:
+         server: "140.135.40.91"
+         path: "/volume1/homes/@LH-EECYCU.EDU.TW/61/{{username}}-{{uid}}"
+     - name: data-share
+       nfs:
+         server: "140.135.40.91"
+         path: "/volume1/share-data"
+     - name: opt
+       nfs:
+         server: "140.135.40.91"
+         path: "/volume1/opt"
 ---
 apiVersion: v1
 kind: Service

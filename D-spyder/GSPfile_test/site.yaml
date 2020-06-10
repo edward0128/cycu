@@ -2,7 +2,7 @@ parameters:
   image:
     type: user_defined_image_list
     values:
-       - harbor.gemini.com:30003/test/a-tensorflow-gpu-v2.0.0:v1
+       - harbor.gemini.com:30003/test/d-spyder:v1
   password:
     type: string
   flavor:
@@ -11,6 +11,10 @@ parameters:
     type: gpfs_user
   project_name:
     type: project_name
+  uid:
+    type: uid
+  gid:
+    type: gid
 ---
 apiVersion: v1
 kind: ReplicationController
@@ -31,13 +35,17 @@ spec:
    containers:
    - name: myweb
      image: {{ image }}
-     command: ["/bin/sh"]
-     args: ["-c", "sleep 3;./run_jupyter.sh"]
      env:
      - name: PASSWORD
        value: '{{password}}'
      - name: username
        value: '{{username}}'
+     - name: account
+       value: '{{username}}'
+     - name: uid
+       value: '{{uid}}'
+     - name: gid
+       value: '{{gid}}'
      ports:
      - containerPort: 8080
        name: tensorboard
@@ -49,33 +57,33 @@ spec:
         - mountPath: "/opt"
           name: opt
           readOnly: false
-        - mountPath: "/data-share"
+        - mountPath: "/home/data-share"
           name: data-share
           readOnly: false
         - mountPath: "/home/{{username}}"
           name: home
           readOnly: false
-        - mountPath: "/lab"
+        - mountPath: "/home/lab"
           name: lab
           readOnly: false
      resources: {{ flavor }}
    volumes:
      - name: lab
        nfs:
-         server: "192.168.20.80"
-         path: "/Pool-1/lab/lab/{{project_name}}"
+         server: "140.135.40.91"
+         path: "/volume1/lab/{{project_name}}"
      - name: home
        nfs:
-         server: "192.168.20.80"
-         path: "/Pool-1/userhome/home/{{username}}"
+         server: "140.135.40.91"
+         path: "/volume1/homes/@LH-EECYCU.EDU.TW/61/{{username}}-{{uid}}"
      - name: data-share
        nfs:
-         server: "192.168.20.80"
-         path: "/Pool-1/data-share/data-share/"
+         server: "140.135.40.91"
+         path: "/volume1/share-data"
      - name: opt
        nfs:
-         server: "192.168.20.80"
-         path: "/Pool-1/opt/opt/"
+         server: "140.135.40.91"
+         path: "/volume1/opt"
 ---
 apiVersion: v1
 kind: Service

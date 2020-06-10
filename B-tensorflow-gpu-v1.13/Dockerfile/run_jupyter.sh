@@ -5,12 +5,46 @@
 #echo edward:$1 | chpasswd
 # change ssh password
 #touch /home/$1
-echo root:$PASSWORD | chpasswd
 
+#uid=$(echo $user_user_id | awk  '{print $1}')
+#gid=$(echo $user_user_id | awk  '{print $2}')
+
+echo $uid
+echo $gid
+echo $PASSWORD
+echo $username
+
+groupadd -g $gid $gid
+
+useradd $username -u $uid -g $gid
+
+echo $username:$PASSWORD | chpasswd
+
+mkdir -p /home/$username
+mkdir -p /home/data-share
+mkdir -p /home/lab
+
+usermod --shell /bin/bash $username
+
+# change user privilege
+echo "$account ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+echo root:$PASSWORD | chpasswd
 
 # Start the first process
 #service ssh start
 /etc/init.d/ssh start
+
+chmod 777 /home/data-share
+chmod 777 /home/lab
+
+
+#sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $username@127.0.0.1 "jupyter notebook --generate-config -y"
+#mkdir -p /home/$username/.jupyter/
+#sleep 3
+#echo "c.NotebookApp.password = passwd(\"$PASSWORD\")" >> /root/.jupyter/jupyter_notebook_config.py
+#cp /root/.jupyter/jupyter_notebook_config.py /home/$username/.jupyter/
+#sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $username@127.0.0.1 "jupyter notebook --notebook-dir=/home --ip 0.0.0.0 --no-browser &"
 
 
 source /etc/bash.bashrc && jupyter notebook --notebook-dir=/home --ip 0.0.0.0 --no-browser --allow-root
@@ -45,8 +79,8 @@ fi
 # Otherwise it loops forever, waking up every 60 seconds
 
 while sleep 60; do
-  ps aux |grep jupyter |grep -q -v grep
-  PROCESS_1_STATUS=$?
+  #ps aux |grep jupyter |grep -q -v grep
+  #PROCESS_1_STATUS=$?
   ps aux |grep ssh |grep -q -v grep
   PROCESS_2_STATUS=$?
   # If the greps above find anything, they exit with 0 status

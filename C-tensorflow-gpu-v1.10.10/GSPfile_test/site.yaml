@@ -2,7 +2,7 @@ parameters:
   image:
     type: user_defined_image_list
     values:
-       - harbor.gemini.com:30003/test/test:v1
+       - harbor.gemini.com:30003/test/c-tensorflow-gpu-v1.10.1:latest
   password:
     type: string
   flavor:

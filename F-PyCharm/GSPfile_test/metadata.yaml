@@ -1,15 +1,15 @@
 # Solution name
-name: e-v4.7.12
+name: tensorflow_gpu
 # Human-readable name for your solution
-title: e-v4.7.12
+title: tensorflow_gpu
 # Solution version
-version: '19.8.13'
+version: '19.08.14'
 # Description
-description: e-v4.7.12
+description: tensorflow_gpu
 # Category
 category: Bare
 # Required gemini version
-gemini_version: ['2019.8.13']
+gemini_version: ['2019.01.31']
 # Solution platform
 container_type: docker
 resource_definitions:
