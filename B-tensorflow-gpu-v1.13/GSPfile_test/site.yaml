@@ -72,19 +72,19 @@ spec:
    volumes:
      - name: lab
        nfs:
-         server: "140.135.40.91"
+         server: "192.168.20.80"
          path: "/volume1/lab/{{project_name}}"
      - name: home
        nfs:
-         server: "140.135.40.91"
+         server: "192.168.20.80"
          path: "/volume1/homes/@LH-EECYCU.EDU.TW/61/{{username}}-{{uid}}"
      - name: data-share
        nfs:
-         server: "140.135.40.91"
-         path: "/volume1/share-data"
+         server: "192.168.20.80"
+         path: "/volume1/data-share"
      - name: opt
        nfs:
-         server: "140.135.40.91"
+         server: "192.168.20.80"
          path: "/volume1/opt"
 ---
 apiVersion: v1
